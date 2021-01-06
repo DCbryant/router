@@ -1,12 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+import { HashRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import Home from './components/Home';
+import User from './components/User';
+import Profile from './components/Profile';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/user" component={User} exact />
+        <Route path="/profile" component={Profile} exact />
+      </Switch>
+      <div>
+        <button>
+          <Link to="/">home</Link>
+        </button>
+        <button>
+          <Link to="/user">user</Link>
+        </button>
+        <button>
+          <Link to="/profile">profile</Link>
+        </button>
+      </div>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
