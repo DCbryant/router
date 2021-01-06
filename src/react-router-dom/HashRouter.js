@@ -6,6 +6,7 @@ export default function HashRouter (props) {
     pathname: window.location.hash.slice(1)
   })
   const [locationState, setLocationState] = useState(undefined)
+  const [msg, setMsg] = useState(undefined)
 
 
   useEffect(() => {
@@ -17,7 +18,7 @@ export default function HashRouter (props) {
       }))
     })
     window.location.hash = window.location.hash || '/'
-    return document.removeEventListener('hashchange')
+    return document.removeEventListener('hashchange', () => {})
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -25,6 +26,10 @@ export default function HashRouter (props) {
     location: location,
     history: {
       push (to) { // 传参
+        if (msg) {
+          const allow = window.confirm(msg(location)+`，并且跳转到${typeof to === 'object' ? to.pathname : to}吗?`)
+          if (!allow) return
+        }
         if (typeof to === 'object') {
           const {pathname, state} = to;
           setLocationState(state)
@@ -32,13 +37,20 @@ export default function HashRouter (props) {
         } else {
           window.location.hash = to;
         }
+      },
+      block(message) {
+        setMsg(message)
+      },
+
+      unblock(message) {
+        setMsg(null)
       }
     }
   }
 
   return (
-    <Context value={value}>
+    <Context.Provider value={value}>
       {props.children}
-    </Context>
+    </Context.Provider>
   )
 }

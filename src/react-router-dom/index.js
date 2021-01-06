@@ -3,6 +3,9 @@ import Route from './Route'
 import Link from './Link'
 import Redirect from './Redirect'
 import Switch from './Switch'
+import withRouter from './withRouter'
+import Prompt from './Prompt'
+import BrowserRouter from './BrowserRouter'
 
 export {
   HashRouter,
@@ -10,4 +13,7 @@ export {
   Link,
   Redirect,
   Switch,
+  withRouter,
+  Prompt,
+  BrowserRouter,
 }
